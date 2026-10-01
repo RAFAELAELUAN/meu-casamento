@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Casamento — Rafaela & Luan</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8fb;
+      color: #334155;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #8fb8d8, #b9d5e8);
+      color: white;
+      text-align: center;
+      padding: 45px 20px 35px;
+      border-radius: 0 0 35px 35px;
+    }
+
+    header .heart {
+      font-size: 35px;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-family: Georgia, serif;
+      font-size: 42px;
+      font-weight: normal;
+    }
+
+    header p {
+      margin-top: 10px;
+      font-size: 17px;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 900px;
+      margin: 25px auto 50px;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .time {
+      background: white;
+      border-radius: 18px;
+      padding: 20px 10px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,.07);
+    }
+
+    .time strong {
+      display: block;
+      font-size: 28px;
+      color: #638eaf;
+    }
+
+    .time span {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+
+    .card {
+      background: white;
+      border-radius: 22px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+    }
+
+    .card h2 {
+      font-family: Georgia, serif;
+      color: #527b9a;
+      margin-bottom: 18px;
+      font-size: 25px;
+    }
+
+    .form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid #d5e1ea;
+      border-radius: 12px;
+      padding: 13px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 18px;
+      background: #709cbc;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px solid #edf2f6;
+    }
+
+    .item:last-child {
+      border-bottom: none;
+    }
+
+    .item span {
+      flex: 1;
+    }
+
+    .item.done span {
+      text-decoration: line-through;
+      color: #94a3b8;
+    }
+
+    .delete {
+      background: #d98d8d;
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      color: #527b9a;
+      margin-top: 18px;
+      text-align: right;
+    }
+
+    .empty {
+      color: #94a3b8;
+      text-align: center;
+      padding: 15px;
+    }
+
+    footer {
+      text-align: center;
+      color: #94a3b8;
+      padding: 10px 20px 35px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 32px;
+      }
+
+      .countdown {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="heart">💍</div>
+  <h1>Rafaela & Luan</h1>
+  <p>21 de Novembro de 2026 • 14:00</p>
+</header>
+
+<main class="container">
+
+  <section class="countdown">
+    <div class="time">
+      <strong id="days">0</strong>
+      <span>Dias</span>
+    </div>
+
+    <div class="time">
+      <strong id="hours">0</strong>
+      <span>Horas</span>
+    </div>
+
+    <div class="time">
+      <strong id="minutes">0</strong>
+      <span>Minutos</span>
+    </div>
+
+    <div class="time">
+      <strong id="seconds">0</strong>
+      <span>Segundos</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>✅ Checklist</h2>
+
+    <div class="form">
+      <input id="taskInput" placeholder="Ex.: Confirmar decoração">
+      <button onclick="addTask()">Adicionar</button>
+    </div>
+
+    <div id="tasks"></div>
+  </section>
+
+  <section class="card">
+    <h2>👰 Convidados</h2>
+
+    <div class="form">
+      <input id="guestInput" placeholder="Nome do convidado">
+      <button onclick="addGuest()">Adicionar</button>
+    </div>
+
+    <div id="guests"></div>
+
+    <div class="total">
+      Total: <span id="guestTotal">0</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>💰 Orçamento</h2>
+
+    <div class="form">
+      <input id="expenseName" placeholder="Ex.: Buffet">
+      <input id="expenseValue" type="number" step="0.01" placeholder="Valor">
+      <button onclick="addExpense()">Adicionar</button>
+    </div>
+
+    <div id="expenses"></div>
+
+    <div class="total">
+      Total: R$ <span id="expenseTotal">0,00</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>📝 Minhas anotações</h2>
+
+    <textarea id="notes" placeholder="Escreva aqui suas ideias, lembretes e detalhes do casamento..."></textarea>
+
+    <br><br>
+
+    <button onclick="saveNotes()">Salvar anotações</button>
+  </section>
+
+</main>
+
+<footer>
+  Feito com ❤️ para Rafaela & Luan
+</footer>
+
+<script>
+
+const weddingDate = new Date("2026-11-21T14:00:00-03:00");
+
+function updateCountdown() {
+
+  const now = new Date();
+  const difference = weddingDate - now;
+
+  if (difference <= 0) {
+    document.getElementById("days").textContent = "0";
+    document.getElementById("hours").textContent = "0";
+    document.getElementById("minutes").textContent = "0";
+    document.getElementById("seconds").textContent = "0";
+    return;
+  }
+
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((difference / (1000 * 60)) % 60);
+  const seconds = Math.floor((difference / 1000) % 60);
+
+  document.getElementById("days").textContent = days;
+  document.getElementById("hours").textContent = hours;
+  document.getElementById("minutes").textContent = minutes;
+  document.getElementById("seconds").textContent = seconds;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+
+let tasks = JSON.parse(localStorage.getItem("casamento_tasks")) || [];
+let guests = JSON.parse(localStorage.getItem("casamento_guests")) || [];
+let expenses = JSON.parse(localStorage.getItem("casamento_expenses")) || [];
+
+function saveData() {
+  localStorage.setItem("casamento_tasks", JSON.stringify(tasks));
+  localStorage.setItem("casamento_guests", JSON.stringify(guests));
+  localStorage.setItem("casamento_expenses", JSON.stringify(expenses));
+}
+
+
+function addTask() {
+
+  const input = document.getElementById("taskInput");
+  const value = input.value.trim();
+
+  if (!value) return;
+
+  tasks.push({
+    text: value,
+    done: false
+  });
+
+  input.value = "";
+
+  saveData();
+  renderTasks();
+}
+
+
+function toggleTask(index) {
+
+  tasks[index].done = !tasks[index].done;
+
+  saveData();
+  renderTasks();
+}
+
+
+function deleteTask(index) {
+
+  tasks.splice(index, 1);
+
+  saveData();
+  renderTasks();
+}
+
+
+function renderTasks() {
+
+  const container = document.getElementById("tasks");
+
+  if (tasks.length === 0) {
+    container.innerHTML = '<div class="empty">Nenhuma tarefa adicionada.</div>';
+    return;
+  }
+
+  container.innerHTML = tasks.map((task, index) => `
+    <div class="item ${task.done ? "done" : ""}">
+      <input type="checkbox"
+        ${task.done ? "checked" : ""}
+        onchange="toggleTask(${index})">
+
+      <span>${escapeHtml(task.text)}</span>
+
+      <button class="delete" onclick="deleteTask(${index})">
+        Excluir
+      </button>
+    </div>
+  `).join("");
+}
+
+
+function addGuest() {
+
+  const input = document.getElementById("guestInput");
+  const value = input.value.trim();
+
+  if (!value) return;
+
+  guests.push(value);
+
+  input.value = "";
+
+  saveData();
+  renderGuests();
+}
+
+
+function deleteGuest(index) {
+
+  guests.splice(index, 1);
+
+  saveData();
+  renderGuests();
+}
+
+
+function renderGuests() {
+
+  const container = document.getElementById("guests");
+
+  document.getElementById("guestTotal").textContent = guests.length;
+
+  if (guests.length === 0) {
+    container.innerHTML = '<div class="empty">Nenhum convidado adicionado.</div>';
+    return;
+  }
+
+  container.innerHTML = guests.map((guest, index) => `
+    <div class="item">
+      <span>${escapeHtml(guest)}</span>
+
+      <button class="delete" onclick="deleteGuest(${index})">
+        Excluir
+      </button>
+    </div>
+  `).join("");
+}
+
+
+function addExpense() {
+
+  const name = document.getElementById("expenseName").value.trim();
+  const value = parseFloat(document.getElementById("expenseValue").value);
+
+  if (!name || isNaN(value)) return;
+
+  expenses.push({
+    name: name,
+    value: value
+  });
+
+  document.getElementById("expenseName").value = "";
+  document.getElementById("expenseValue").value = "";
+
+  saveData();
+  renderExpenses();
+}
+
+
+function deleteExpense(index) {
+
+  expenses.splice(index, 1);
+
+  saveData();
+  renderExpenses();
+}
+
+
+function renderExpenses() {
+
+  const container = document.getElementById("expenses");
+
+  if (expenses.length === 0) {
+    container.innerHTML = '<div class="empty">Nenhum gasto adicionado.</div>';
+  } else {
+
+    container.innerHTML = expenses.map((expense, index) => `
+      <div class="item">
+        <span>
+          ${escapeHtml(expense.name)}
+          — R$ ${expense.value.toLocaleString("pt-BR", {
+            minimumFractionDigits: 2
+          })}
+        </span>
+
+        <button class="delete" onclick="deleteExpense(${index})">
+          Excluir
+        </button>
+      </div>
+    `).join("");
+  }
+
+  const total = expenses.reduce((sum, expense) => {
+    return sum + expense.value;
+  }, 0);
+
+  document.getElementById("expenseTotal").textContent =
+    total.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2
+    });
+}
+
+
+function saveNotes() {
+
+  const notes = document.getElementById("notes").value;
+
+  localStorage.setItem("casamento_notes", notes);
+
+  alert("Anotações salvas! ❤️");
+}
+
+
+function loadNotes() {
+
+  const notes = localStorage.getItem("casamento_notes");
+
+  if (notes) {
+    document.getElementById("notes").value = notes;
+  }
+}
+
+
+function escapeHtml(text) {
+
+  const div = document.createElement("div");
+  div.textContent = text;
+
+  return div.innerHTML;
+}
+
+
+renderTasks();
+renderGuests();
+renderExpenses();
+loadNotes();
+
+</script>
+
+</body>
+</html>
