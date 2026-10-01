@@ -1,42 +1,1439 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#8fb7d8"><meta name="description" content="Meu Casamento — Rafaela & Luan">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta name="theme-color" content="#8fb7d8">
+<meta name="description" content="Meu Casamento — Rafaela & Luan">
+
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MEU CASAMENTO">
+
 <title>Meu Casamento — Rafaela & Luan</title>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap');
-:root{--serenity:#91b9d8;--serenity-dark:#5f89ab;--serenity-light:#eaf3f9;--silver:#aeb8c1;--silver-dark:#74808a;--ink:#435260;--white:#fff;--red:#d66b73;--red-bg:#fff0f1;--green:#4d9b79;--green-bg:#eaf8f1;--shadow:0 12px 35px rgba(67,82,96,.11)}
-*{box-sizing:border-box}body{margin:0;color:var(--ink);font-family:Montserrat,Arial,sans-serif;background:linear-gradient(180deg,#f8fbfd 0,#edf5fa 100%);min-height:100vh}.app{max-width:1100px;margin:auto;padding-bottom:40px}
-.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#7faacb,#b9d2e5 55%,#eef4f7);min-height:330px;padding:42px 22px 32px;text-align:center;color:#fff;border-radius:0 0 46px 46px;box-shadow:0 12px 30px rgba(67,82,96,.15)}
-.hero:before,.hero:after{content:'✿';position:absolute;font-family:Georgia;font-size:95px;color:rgba(255,255,255,.28)}.hero:before{left:-10px;top:20px}.hero:after{right:-10px;bottom:10px;transform:rotate(25deg)}.floral{font-size:25px;letter-spacing:12px;color:#fff;margin-bottom:5px}.script{font-family:'Great Vibes',cursive;font-size:64px;font-weight:400;line-height:1.05;text-shadow:0 2px 8px rgba(60,80,95,.15)}.hero h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;margin:8px 0}.date{font-size:14px;letter-spacing:2px}.welcome{font-family:'Cormorant Garamond',serif;font-size:19px;margin-top:18px}.container{padding:22px}.card{background:rgba(255,255,255,.94);border:1px solid rgba(174,184,193,.32);border-radius:26px;padding:24px;margin:18px 0;box-shadow:var(--shadow)}.card h3{font-family:'Cormorant Garamond',serif;color:var(--serenity-dark);font-size:29px;margin:0 0 16px}.subtitle{font-size:12px;color:var(--silver-dark);margin-top:-9px;margin-bottom:16px}
-.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:-45px;position:relative}.time{background:rgba(255,255,255,.96);border:1px solid #d9e5ed;border-radius:20px;padding:17px 8px;text-align:center;box-shadow:var(--shadow)}.time strong{display:block;font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--serenity-dark)}.time span{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--silver-dark)}
-.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:20px 0}.nav button{border:1px solid #d6e3eb;background:#fff;color:var(--serenity-dark);border-radius:14px;padding:12px 6px;font:600 11px Montserrat;cursor:pointer}.nav button.active,.nav button:hover{background:var(--serenity);color:#fff}
-.section{display:none}.section.active{display:block}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.form{display:flex;gap:9px;flex-wrap:wrap}input,select,textarea{border:1px solid #d5e1e9;border-radius:12px;padding:12px 13px;background:#fbfdfe;color:var(--ink);font:14px Montserrat;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--serenity)}.grow{flex:1;min-width:180px}button.primary{border:0;border-radius:12px;background:var(--serenity-dark);color:#fff;padding:12px 17px;font:600 13px Montserrat;cursor:pointer}.list{margin-top:12px}.item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #edf1f4}.item:last-child{border-bottom:0}.item .text{flex:1}.muted{color:#94a1aa;font-size:12px}.delete{border:0;background:#f3d4d7;color:#a44950;border-radius:9px;padding:7px 9px;cursor:pointer}.tag{display:inline-block;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:700}.tag.red{background:var(--red-bg);color:var(--red)}.tag.green{background:var(--green-bg);color:var(--green)}
-.finance{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.metric{border-radius:18px;padding:16px;background:var(--serenity-light);border:1px solid #dcebf4}.metric strong{display:block;font-family:'Cormorant Garamond';font-size:27px;color:var(--serenity-dark)}.metric small{color:var(--silver-dark)}.expense{border:1px solid #e2e9ed;border-radius:17px;padding:15px;margin:10px 0}.expense-head{display:flex;align-items:center;gap:8px}.expense-head strong{flex:1;font-family:'Cormorant Garamond';font-size:22px}.bar{height:8px;background:#edf1f3;border-radius:99px;overflow:hidden;margin:11px 0}.bar i{display:block;height:100%;background:var(--green);border-radius:99px}.payrow{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap}.payrow input{max-width:150px}.payment{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:6px 0;color:#67747e}.payment b{color:var(--green)}
-.timeline{position:relative;margin-left:9px;border-left:2px solid #c6d9e6;padding-left:20px}.event{position:relative;padding:10px 0 16px}.event:before{content:'♡';position:absolute;left:-31px;top:8px;background:#fff;color:var(--serenity-dark);font-size:17px}.event strong{font-family:'Cormorant Garamond';font-size:21px;color:var(--serenity-dark)}
-.info{background:linear-gradient(135deg,#f4f9fc,#fff);border-radius:18px;padding:16px;margin:10px 0;border:1px solid #e1ebf1}.info b{color:var(--serenity-dark)}footer{text-align:center;color:#8c99a2;font-size:12px;padding:15px}.flower-divider{font-family:Georgia;color:var(--silver);text-align:center;font-size:20px;letter-spacing:7px;margin:5px}
-@media(max-width:760px){.script{font-size:50px}.countdown{grid-template-columns:repeat(2,1fr);margin-top:-35px}.grid{grid-template-columns:1fr}.finance{grid-template-columns:1fr}.nav{grid-template-columns:repeat(3,1fr)}.hero{min-height:290px}.container{padding:14px}.card{padding:18px}.nav button{font-size:10px}}
-</style></head>
-<body><div class="app">
-<header class="hero"><div class="floral">✿ ❀ ✿</div><div class="script">Rafaela & Luan</div><h2>Nosso grande dia</h2><div class="date">21 DE NOVEMBRO DE 2026 • 14:00</div><div class="welcome">Um cantinho para organizar, sonhar e acompanhar cada detalhe do nosso casamento.</div></header>
+
+:root{
+--serenity:#91b9d8;
+--serenity-dark:#5f89ab;
+--serenity-light:#eaf3f9;
+--silver:#aeb8c1;
+--silver-dark:#74808a;
+--ink:#435260;
+--white:#fff;
+--red:#d66b73;
+--red-bg:#fff0f1;
+--green:#4d9b79;
+--green-bg:#eaf8f1;
+--shadow:0 12px 35px rgba(67,82,96,.11)
+}
+
+*{
+box-sizing:border-box
+}
+
+body{
+margin:0;
+color:var(--ink);
+font-family:Montserrat,Arial,sans-serif;
+background:linear-gradient(180deg,#f8fbfd 0,#edf5fa 100%);
+min-height:100vh
+}
+
+.app{
+max-width:1100px;
+margin:auto;
+padding-bottom:40px
+}
+
+.hero{
+position:relative;
+overflow:hidden;
+background:linear-gradient(135deg,#7faacb,#b9d2e5 55%,#eef4f7);
+min-height:330px;
+padding:42px 22px 32px;
+text-align:center;
+color:#fff;
+border-radius:0 0 46px 46px;
+box-shadow:0 12px 30px rgba(67,82,96,.15)
+}
+
+.hero:before,
+.hero:after{
+content:'✿';
+position:absolute;
+font-family:Georgia;
+font-size:95px;
+color:rgba(255,255,255,.28)
+}
+
+.hero:before{
+left:-10px;
+top:20px
+}
+
+.hero:after{
+right:-10px;
+bottom:10px;
+transform:rotate(25deg)
+}
+
+.floral{
+font-size:25px;
+letter-spacing:12px;
+color:#fff;
+margin-bottom:5px
+}
+
+.script{
+font-family:'Great Vibes',cursive;
+font-size:64px;
+font-weight:400;
+line-height:1.05;
+text-shadow:0 2px 8px rgba(60,80,95,.15)
+}
+
+.hero h2{
+font-family:'Cormorant Garamond',serif;
+font-weight:600;
+font-size:24px;
+margin:8px 0
+}
+
+.date{
+font-size:14px;
+letter-spacing:2px
+}
+
+.welcome{
+font-family:'Cormorant Garamond',serif;
+font-size:19px;
+margin-top:18px
+}
+
+.container{
+padding:22px
+}
+
+.card{
+background:rgba(255,255,255,.94);
+border:1px solid rgba(174,184,193,.32);
+border-radius:26px;
+padding:24px;
+margin:18px 0;
+box-shadow:var(--shadow)
+}
+
+.card h3{
+font-family:'Cormorant Garamond',serif;
+color:var(--serenity-dark);
+font-size:29px;
+margin:0 0 16px
+}
+
+.subtitle{
+font-size:12px;
+color:var(--silver-dark);
+margin-top:-9px;
+margin-bottom:16px
+}
+
+.countdown{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin-top:-45px;
+position:relative
+}
+
+.time{
+background:rgba(255,255,255,.96);
+border:1px solid #d9e5ed;
+border-radius:20px;
+padding:17px 8px;
+text-align:center;
+box-shadow:var(--shadow)
+}
+
+.time strong{
+display:block;
+font-family:'Cormorant Garamond',serif;
+font-size:34px;
+color:var(--serenity-dark)
+}
+
+.time span{
+font-size:10px;
+letter-spacing:1.2px;
+text-transform:uppercase;
+color:var(--silver-dark)
+}
+
+.nav{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:8px;
+margin:20px 0
+}
+
+.nav button{
+border:1px solid #d6e3eb;
+background:#fff;
+color:var(--serenity-dark);
+border-radius:14px;
+padding:12px 6px;
+font:600 11px Montserrat;
+cursor:pointer
+}
+
+.nav button.active,
+.nav button:hover{
+background:var(--serenity);
+color:#fff
+}
+
+.section{
+display:none
+}
+
+.section.active{
+display:block
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px
+}
+
+.form{
+display:flex;
+gap:9px;
+flex-wrap:wrap
+}
+
+input,
+select,
+textarea{
+border:1px solid #d5e1e9;
+border-radius:12px;
+padding:12px 13px;
+background:#fbfdfe;
+color:var(--ink);
+font:14px Montserrat;
+outline:none
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+border-color:var(--serenity)
+}
+
+.grow{
+flex:1;
+min-width:180px
+}
+
+button.primary{
+border:0;
+border-radius:12px;
+background:var(--serenity-dark);
+color:#fff;
+padding:12px 17px;
+font:600 13px Montserrat;
+cursor:pointer
+}
+
+.list{
+margin-top:12px
+}
+
+.item{
+display:flex;
+align-items:center;
+gap:10px;
+padding:12px 0;
+border-bottom:1px solid #edf1f4
+}
+
+.item:last-child{
+border-bottom:0
+}
+
+.item .text{
+flex:1
+}
+
+.muted{
+color:#94a1aa;
+font-size:12px
+}
+
+.delete{
+border:0;
+background:#f3d4d7;
+color:#a44950;
+border-radius:9px;
+padding:7px 9px;
+cursor:pointer
+}
+
+.tag{
+display:inline-block;
+padding:5px 9px;
+border-radius:999px;
+font-size:10px;
+font-weight:700
+}
+
+.tag.red{
+background:var(--red-bg);
+color:var(--red)
+}
+
+.tag.green{
+background:var(--green-bg);
+color:var(--green)
+}
+
+.finance{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin-bottom:18px
+}
+
+.metric{
+border-radius:18px;
+padding:16px;
+background:var(--serenity-light);
+border:1px solid #dcebf4
+}
+
+.metric strong{
+display:block;
+font-family:'Cormorant Garamond';
+font-size:27px;
+color:var(--serenity-dark)
+}
+
+.metric small{
+color:var(--silver-dark)
+}
+
+.expense{
+border:1px solid #e2e9ed;
+border-radius:17px;
+padding:15px;
+margin:10px 0
+}
+
+.expense-head{
+display:flex;
+align-items:center;
+gap:8px
+}
+
+.expense-head strong{
+flex:1;
+font-family:'Cormorant Garamond';
+font-size:22px
+}
+
+.bar{
+height:8px;
+background:#edf1f3;
+border-radius:99px;
+overflow:hidden;
+margin:11px 0
+}
+
+.bar i{
+display:block;
+height:100%;
+background:var(--green);
+border-radius:99px
+}
+
+.payrow{
+display:flex;
+gap:8px;
+align-items:center;
+margin-top:8px;
+flex-wrap:wrap
+}
+
+.payrow input{
+max-width:150px
+}
+
+.payment{
+display:flex;
+justify-content:space-between;
+gap:10px;
+font-size:12px;
+padding:6px 0;
+color:#67747e
+}
+
+.payment b{
+color:var(--green)
+}
+
+.timeline{
+position:relative;
+margin-left:9px;
+border-left:2px solid #c6d9e6;
+padding-left:20px
+}
+
+.event{
+position:relative;
+padding:10px 0 16px
+}
+
+.event:before{
+content:'♡';
+position:absolute;
+left:-31px;
+top:8px;
+background:#fff;
+color:var(--serenity-dark);
+font-size:17px
+}
+
+.event strong{
+font-family:'Cormorant Garamond';
+font-size:21px;
+color:var(--serenity-dark)
+}
+
+.info{
+background:linear-gradient(135deg,#f4f9fc,#fff);
+border-radius:18px;
+padding:16px;
+margin:10px 0;
+border:1px solid #e1ebf1
+}
+
+.info b{
+color:var(--serenity-dark)
+}
+
+footer{
+text-align:center;
+color:#8c99a2;
+font-size:12px;
+padding:15px
+}
+
+.flower-divider{
+font-family:Georgia;
+color:var(--silver);
+text-align:center;
+font-size:20px;
+letter-spacing:7px;
+margin:5px
+}
+
+@media(max-width:760px){
+
+.script{
+font-size:50px
+}
+
+.countdown{
+grid-template-columns:repeat(2,1fr);
+margin-top:-35px
+}
+
+.grid{
+grid-template-columns:1fr
+}
+
+.finance{
+grid-template-columns:1fr
+}
+
+.nav{
+grid-template-columns:repeat(3,1fr)
+}
+
+.hero{
+min-height:290px
+}
+
+.container{
+padding:14px
+}
+
+.card{
+padding:18px
+}
+
+.nav button{
+font-size:10px
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="hero">
+
+<div class="floral">✿ ❀ ✿</div>
+
+<div class="script">
+Rafaela & Luan
+</div>
+
+<h2>
+Nosso grande dia
+</h2>
+
+<div class="date">
+21 DE NOVEMBRO DE 2026 • 14:00
+</div>
+
+<div class="welcome">
+Um cantinho para organizar, sonhar e acompanhar cada detalhe do nosso casamento.
+</div>
+
+</header>
+
 <main class="container">
-<div class="countdown"><div class="time"><strong id="days">0</strong><span>Dias</span></div><div class="time"><strong id="hours">0</strong><span>Horas</span></div><div class="time"><strong id="minutes">0</strong><span>Minutos</span></div><div class="time"><strong id="seconds">0</strong><span>Segundos</span></div></div>
-<div class="flower-divider">✿ ❀ ✿</div>
-<nav class="nav"><button class="active" data-tab="inicio">Início</button><button data-tab="tarefas">Checklist</button><button data-tab="financeiro">Financeiro</button><button data-tab="cronograma">Cronograma</button><button data-tab="cerimonia">Cerimônia</button></nav>
-<section id="inicio" class="section active"><div class="card"><h3>Bem-vindos ao nosso casamento</h3><p>Rafaela & Luan, este é o espaço para acompanhar tudo o que falta, tudo o que já foi pago e cada etapa até o nosso “sim”.</p><div class="info"><b>Data:</b> 21 de novembro de 2026<br><b>Horário:</b> 14:00<br><b>Estilo:</b> Azul Serenity + prata</div></div></section>
-<section id="tarefas" class="section"><div class="card"><h3>Checklist do casamento</h3><div class="subtitle">Organize por categoria e marque o que já foi concluído.</div><div class="form"><input id="taskText" class="grow" placeholder="Ex.: Confirmar decoração"><select id="taskCat"><option>Local</option><option>Decoração</option><option>Buffet</option><option>Vestidos e trajes</option><option>Documentação</option><option>Convidados</option><option>Cerimônia</option><option>Outros</option></select><button class="primary" onclick="addTask()">Adicionar</button></div><div id="tasks" class="list"></div></div></section>
-<section id="financeiro" class="section"><div class="card"><h3>Controle financeiro</h3><div class="subtitle">Cadastre cada fornecedor com o valor total e registre pagamentos parciais em qualquer dia. O sistema calcula automaticamente o que falta.</div><div class="finance"><div class="metric"><small>Total contratado</small><strong id="totalContracted">R$ 0,00</strong></div><div class="metric"><small>Total pago</small><strong id="totalPaid">R$ 0,00</strong></div><div class="metric"><small>Falta pagar</small><strong id="totalDue">R$ 0,00</strong></div></div><div class="form"><input id="vendorName" class="grow" placeholder="Ex.: Salão de festa"><input id="vendorTotal" type="number" step="0.01" placeholder="Valor total"><button class="primary" onclick="addVendor()">Adicionar fornecedor</button></div><div id="vendors" class="list"></div></div></section>
-<section id="cronograma" class="section"><div class="card"><h3>Cronograma</h3><div class="subtitle">Adicione compromissos, horários e preparativos.</div><div class="form"><input id="eventDate" type="date"><input id="eventTime" type="time"><input id="eventText" class="grow" placeholder="Ex.: Prova do vestido"><button class="primary" onclick="addEvent()">Adicionar</button></div><div id="events" class="timeline"></div></div></section>
-<section id="cerimonia" class="section"><div class="card"><h3>Informações da cerimônia</h3><div class="info"><b>Casal</b><br>Rafaela & Luan</div><div class="info"><b>Data e horário</b><br>21 de novembro de 2026 às 14:00</div><div class="info"><b>Estilo</b><br>Azul Serenity + prata • cerimônia breve e romântica</div><div class="info"><b>Família</b><br>Arthur • Manuela • Gabriel • Anthonny • Benicio</div><div class="info"><b>Participações especiais</b><br>Entrada dos pais, padrinhos, crianças e florista conforme o roteiro do casamento.</div><div class="info"><b>Observação</b><br>Este espaço pode ser ampliado depois com os detalhes do roteiro, sem necessidade de login ou banco de dados.</div></div></section>
-</main><footer>Feito com carinho para Rafaela & Luan ✿</footer></div>
+
+<div class="countdown">
+
+<div class="time">
+<strong id="days">0</strong>
+<span>Dias</span>
+</div>
+
+<div class="time">
+<strong id="hours">0</strong>
+<span>Horas</span>
+</div>
+
+<div class="time">
+<strong id="minutes">0</strong>
+<span>Minutos</span>
+</div>
+
+<div class="time">
+<strong id="seconds">0</strong>
+<span>Segundos</span>
+</div>
+
+</div>
+
+<div class="flower-divider">
+✿ ❀ ✿
+</div>
+
+<nav class="nav">
+
+<button class="active" data-tab="inicio">
+Início
+</button>
+
+<button data-tab="tarefas">
+Checklist
+</button>
+
+<button data-tab="financeiro">
+Financeiro
+</button>
+
+<button data-tab="cronograma">
+Cronograma
+</button>
+
+<button data-tab="cerimonia">
+Cerimônia
+</button>
+
+</nav>
+
+<section id="inicio" class="section active">
+
+<div class="card">
+
+<h3>
+Bem-vindos ao nosso casamento
+</h3>
+
+<p>
+Rafaela & Luan, este é o espaço para acompanhar tudo o que falta, tudo o que já foi pago e cada etapa até o nosso “sim”.
+</p>
+
+<div class="info">
+
+<b>Data:</b>
+21 de novembro de 2026
+
+<br>
+
+<b>Horário:</b>
+14:00
+
+<br>
+
+<b>Estilo:</b>
+Azul Serenity + prata
+
+</div>
+
+</div>
+
+</section>
+
+<section id="tarefas" class="section">
+
+<div class="card">
+
+<h3>
+Checklist do casamento
+</h3>
+
+<div class="subtitle">
+Organize por categoria e marque o que já foi concluído.
+</div>
+
+<div class="form">
+
+<input
+id="taskText"
+class="grow"
+placeholder="Ex.: Confirmar decoração"
+>
+
+<select id="taskCat">
+
+<option>Local</option>
+<option>Decoração</option>
+<option>Buffet</option>
+<option>Vestidos e trajes</option>
+<option>Documentação</option>
+<option>Convidados</option>
+<option>Cerimônia</option>
+<option>Outros</option>
+
+</select>
+
+<button class="primary" onclick="addTask()">
+Adicionar
+</button>
+
+</div>
+
+<div id="tasks" class="list"></div>
+
+</div>
+
+</section>
+
+<section id="financeiro" class="section">
+
+<div class="card">
+
+<h3>
+Controle financeiro
+</h3>
+
+<div class="subtitle">
+Cadastre cada fornecedor com o valor total e registre pagamentos parciais em qualquer dia. O sistema calcula automaticamente o que falta.
+</div>
+
+<div class="finance">
+
+<div class="metric">
+
+<small>
+Total contratado
+</small>
+
+<strong id="totalContracted">
+R$ 0,00
+</strong>
+
+</div>
+
+<div class="metric">
+
+<small>
+Total pago
+</small>
+
+<strong id="totalPaid">
+R$ 0,00
+</strong>
+
+</div>
+
+<div class="metric">
+
+<small>
+Falta pagar
+</small>
+
+<strong id="totalDue">
+R$ 0,00
+</strong>
+
+</div>
+
+</div>
+
+<div class="form">
+
+<input
+id="vendorName"
+class="grow"
+placeholder="Ex.: Salão de festa"
+>
+
+<input
+id="vendorTotal"
+type="number"
+step="0.01"
+placeholder="Valor total"
+>
+
+<button class="primary" onclick="addVendor()">
+Adicionar fornecedor
+</button>
+
+</div>
+
+<div id="vendors" class="list"></div>
+
+</div>
+
+</section>
+
+<section id="cronograma" class="section">
+
+<div class="card">
+
+<h3>
+Cronograma
+</h3>
+
+<div class="subtitle">
+Adicione compromissos, horários e preparativos.
+</div>
+
+<div class="form">
+
+<input
+id="eventDate"
+type="date"
+>
+
+<input
+id="eventTime"
+type="time"
+>
+
+<input
+id="eventText"
+class="grow"
+placeholder="Ex.: Prova do vestido"
+>
+
+<button class="primary" onclick="addEvent()">
+Adicionar
+</button>
+
+</div>
+
+<div id="events" class="timeline"></div>
+
+</div>
+
+</section>
+
+<section id="cerimonia" class="section">
+
+<div class="card">
+
+<h3>
+Informações da cerimônia
+</h3>
+
+<div class="info">
+
+<b>Casal</b>
+
+<br>
+
+Rafaela & Luan
+
+</div>
+
+<div class="info">
+
+<b>Data e horário</b>
+
+<br>
+
+21 de novembro de 2026 às 14:00
+
+</div>
+
+<div class="info">
+
+<b>Estilo</b>
+
+<br>
+
+Azul Serenity + prata • cerimônia breve e romântica
+
+</div>
+
+<div class="info">
+
+<b>Família</b>
+
+<br>
+
+Arthur • Manuela • Gabriel • Anthonny • Benicio
+
+</div>
+
+<div class="info">
+
+<b>Participações especiais</b>
+
+<br>
+
+Entrada dos pais, padrinhos, crianças e florista conforme o roteiro do casamento.
+
+</div>
+
+<div class="info">
+
+<b>Observação</b>
+
+<br>
+
+Este espaço pode ser ampliado depois com os detalhes do roteiro, sem necessidade de login ou banco de dados.
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+Feito com carinho para Rafaela & Luan ✿
+</footer>
+
+</div>
+
 <script>
-const wedding=new Date('2026-11-21T14:00:00-03:00');function money(v){return Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
-function tick(){let d=wedding-new Date();if(d<0)d=0;document.getElementById('days').textContent=Math.floor(d/86400000);document.getElementById('hours').textContent=Math.floor(d/3600000)%24;document.getElementById('minutes').textContent=Math.floor(d/60000)%60;document.getElementById('seconds').textContent=Math.floor(d/1000)%60}setInterval(tick,1000);tick();
-let tasks=JSON.parse(localStorage.getItem('mc_tasks')||'[]');let vendors=JSON.parse(localStorage.getItem('mc_vendors')||'[]');let events=JSON.parse(localStorage.getItem('mc_events')||'[]');const save=()=>{localStorage.setItem('mc_tasks',JSON.stringify(tasks));localStorage.setItem('mc_vendors',JSON.stringify(vendors));localStorage.setItem('mc_events',JSON.stringify(events))};
-document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active')});
-function addTask(){let t=document.getElementById('taskText').value.trim(),c=document.getElementById('taskCat').value;if(!t)return;tasks.push({t,c,done:false});document.getElementById('taskText').value='';save();renderTasks()}function toggleTask(i){tasks[i].done=!tasks[i].done;save();renderTasks()}function delTask(i){tasks.splice(i,1);save();renderTasks()}function renderTasks(){let e=document.getElementById('tasks');if(!tasks.length){e.innerHTML='<div class="muted">Nenhuma tarefa cadastrada.</div>';return}e.innerHTML=tasks.map((x,i)=>`<div class="item"><input type="checkbox" ${x.done?'checked':''} onchange="toggleTask(${i})"><div class="text" style="${x.done?'text-decoration:line-through;opacity:.55':''}"><b>${esc(x.t)}</b><br><span class="muted">${esc(x.c)}</span></div><button class="delete" onclick="delTask(${i})">Excluir</button></div>`).join('')}
-function addVendor(){let n=document.getElementById('vendorName').value.trim(),t=parseFloat(document.getElementById('vendorTotal').value);if(!n||isNaN(t)||t<=0)return;vendors.push({n,total:t,payments:[]});document.getElementById('vendorName').value='';document.getElementById('vendorTotal').value='';save();renderVendors()}function addPayment(i){let inp=document.getElementById('pay'+i),v=parseFloat(inp.value);if(isNaN(v)||v<=0)return;vendors[i].payments.push({value:v,date:new Date().toLocaleDateString('pt-BR')});inp.value='';save();renderVendors()}function delVendor(i){vendors.splice(i,1);save();renderVendors()}function renderVendors(){let c=document.getElementById('vendors'),tc=0,tp=0;vendors.forEach(v=>{tc+=v.total;tp+=v.payments.reduce((a,p)=>a+p.value,0)});document.getElementById('totalContracted').textContent=money(tc);document.getElementById('totalPaid').textContent=money(tp);document.getElementById('totalDue').textContent=money(Math.max(0,tc-tp));if(!vendors.length){c.innerHTML='<div class="muted">Nenhum fornecedor cadastrado.</div>';return}c.innerHTML=vendors.map((v,i)=>{let paid=v.payments.reduce((a,p)=>a+p.value,0),due=Math.max(0,v.total-paid),pct=Math.min(100,v.total?paid/v.total*100:0),done=due<=0;return `<div class="expense"><div class="expense-head"><strong>${esc(v.n)}</strong><span class="tag ${done?'green':'red'}">${done?'PAGO':'FALTA '+money(due)}</span><button class="delete" onclick="delVendor(${i})">Excluir</button></div><div class="muted">Total: ${money(v.total)} • Pago: <span style="color:var(--green);font-weight:700">${money(paid)}</span> • Falta: <span style="color:${done?'var(--green)':'var(--red)'};font-weight:700">${money(due)}</span></div><div class="bar"><i style="width:${pct}%"></i></div><div class="payrow"><input id="pay${i}" type="number" step="0.01" placeholder="Novo pagamento"><button class="primary" onclick="addPayment(${i})">Registrar pagamento</button></div>${v.payments.length?v.payments.map(p=>`<div class="payment"><span>Pagamento em ${p.date}</span><b>+ ${money(p.value)}</b></div>`).join(''): '<div class="muted" style="margin-top:8px">Nenhum pagamento registrado.</div>'}</div>`}).join('')}
-function addEvent(){let d=document.getElementById('eventDate').value,t=document.getElementById('eventTime').value,x=document.getElementById('eventText').value.trim();if(!d||!x)return;events.push({d,t,x});events.sort((a,b)=>(a.d+a.t).localeCompare(b.d+b.t));document.getElementById('eventText').value='';save();renderEvents()}function delEvent(i){events.splice(i,1);save();renderEvents()}function renderEvents(){let e=document.getElementById('events');if(!events.length){e.innerHTML='<div class="muted">Nenhum compromisso cadastrado.</div>';return}e.innerHTML=events.map((x,i)=>`<div class="event"><strong>${new Date(x.d+'T12:00:00').toLocaleDateString('pt-BR')} ${x.t?'• '+x.t:''}</strong><br>${esc(x.x)} <button class="delete" onclick="delEvent(${i})">Excluir</button></div>`).join('')}
-renderTasks();renderVendors();renderEvents();
-</script></body></html>
+
+const wedding =
+new Date('2026-11-21T14:00:00-03:00');
+
+function money(v){
+
+return Number(v || 0).toLocaleString(
+'pt-BR',
+{
+style:'currency',
+currency:'BRL'
+}
+);
+
+}
+
+function esc(s){
+
+const d=document.createElement('div');
+
+d.textContent=s;
+
+return d.innerHTML;
+
+}
+
+function tick(){
+
+let d=wedding-new Date();
+
+if(d<0)d=0;
+
+document.getElementById('days').textContent=
+Math.floor(d/86400000);
+
+document.getElementById('hours').textContent=
+Math.floor(d/3600000)%24;
+
+document.getElementById('minutes').textContent=
+Math.floor(d/60000)%60;
+
+document.getElementById('seconds').textContent=
+Math.floor(d/1000)%60;
+
+}
+
+setInterval(tick,1000);
+
+tick();
+
+
+let tasks =
+JSON.parse(
+localStorage.getItem('mc_tasks') || '[]'
+);
+
+let vendors =
+JSON.parse(
+localStorage.getItem('mc_vendors') || '[]'
+);
+
+let events =
+JSON.parse(
+localStorage.getItem('mc_events') || '[]'
+);
+
+
+const save=()=>{
+
+localStorage.setItem(
+'mc_tasks',
+JSON.stringify(tasks)
+);
+
+localStorage.setItem(
+'mc_vendors',
+JSON.stringify(vendors)
+);
+
+localStorage.setItem(
+'mc_events',
+JSON.stringify(events)
+);
+
+};
+
+
+document.querySelectorAll('.nav button')
+.forEach(b=>{
+
+b.onclick=()=>{
+
+document.querySelectorAll('.nav button')
+.forEach(x=>x.classList.remove('active'));
+
+document.querySelectorAll('.section')
+.forEach(x=>x.classList.remove('active'));
+
+b.classList.add('active');
+
+document.getElementById(
+b.dataset.tab
+).classList.add('active');
+
+};
+
+});
+
+
+function addTask(){
+
+let t=
+document.getElementById('taskText')
+.value.trim();
+
+let c=
+document.getElementById('taskCat')
+.value;
+
+if(!t)return;
+
+tasks.push({
+t,
+c,
+done:false
+});
+
+document.getElementById('taskText').value='';
+
+save();
+
+renderTasks();
+
+}
+
+
+function toggleTask(i){
+
+tasks[i].done=!tasks[i].done;
+
+save();
+
+renderTasks();
+
+}
+
+
+function delTask(i){
+
+tasks.splice(i,1);
+
+save();
+
+renderTasks();
+
+}
+
+
+function renderTasks(){
+
+let e=document.getElementById('tasks');
+
+if(!tasks.length){
+
+e.innerHTML=
+'<div class="muted">Nenhuma tarefa cadastrada.</div>';
+
+return;
+
+}
+
+e.innerHTML=tasks.map((x,i)=>`
+
+<div class="item">
+
+<input
+type="checkbox"
+${x.done?'checked':''}
+onchange="toggleTask(${i})"
+>
+
+<div
+class="text"
+style="${x.done?'text-decoration:line-through;opacity:.55':''}"
+>
+
+<b>
+${esc(x.t)}
+</b>
+
+<br>
+
+<span class="muted">
+${esc(x.c)}
+</span>
+
+</div>
+
+<button
+class="delete"
+onclick="delTask(${i})"
+>
+Excluir
+</button>
+
+</div>
+
+`).join('');
+
+}
+
+
+function addVendor(){
+
+let n=
+document.getElementById('vendorName')
+.value.trim();
+
+let t=
+parseFloat(
+document.getElementById('vendorTotal').value
+);
+
+if(!n || isNaN(t) || t<=0)return;
+
+vendors.push({
+n,
+total:t,
+payments:[]
+});
+
+document.getElementById('vendorName').value='';
+
+document.getElementById('vendorTotal').value='';
+
+save();
+
+renderVendors();
+
+}
+
+
+function addPayment(i){
+
+let inp=
+document.getElementById('pay'+i);
+
+let v=parseFloat(inp.value);
+
+if(isNaN(v) || v<=0)return;
+
+vendors[i].payments.push({
+value:v,
+date:new Date().toLocaleDateString('pt-BR')
+});
+
+inp.value='';
+
+save();
+
+renderVendors();
+
+}
+
+
+function delVendor(i){
+
+vendors.splice(i,1);
+
+save();
+
+renderVendors();
+
+}
+
+
+function renderVendors(){
+
+let c=
+document.getElementById('vendors');
+
+let tc=0;
+
+let tp=0;
+
+vendors.forEach(v=>{
+
+tc+=v.total;
+
+tp+=v.payments.reduce(
+(a,p)=>a+p.value,
+0
+);
+
+});
+
+
+document.getElementById(
+'totalContracted'
+).textContent=money(tc);
+
+document.getElementById(
+'totalPaid'
+).textContent=money(tp);
+
+document.getElementById(
+'totalDue'
+).textContent=
+money(Math.max(0,tc-tp));
+
+
+if(!vendors.length){
+
+c.innerHTML=
+'<div class="muted">Nenhum fornecedor cadastrado.</div>';
+
+return;
+
+}
+
+
+c.innerHTML=vendors.map((v,i)=>{
+
+let paid=
+v.payments.reduce(
+(a,p)=>a+p.value,
+0
+);
+
+let due=
+Math.max(0,v.total-paid);
+
+let pct=
+Math.min(
+100,
+v.total
+? paid/v.total*100
+:0
+);
+
+let done=due<=0;
+
+return `
+
+<div class="expense">
+
+<div class="expense-head">
+
+<strong>
+${esc(v.n)}
+</strong>
+
+<span class="tag ${done?'green':'red'}">
+
+${done
+?'PAGO'
+:'FALTA '+money(due)
+}
+
+</span>
+
+<button
+class="delete"
+onclick="delVendor(${i})"
+>
+Excluir
+</button>
+
+</div>
+
+<div class="muted">
+
+Total:
+${money(v.total)}
+
+•
+
+Pago:
+<span
+style="color:var(--green);font-weight:700"
+>
+${money(paid)}
+</span>
+
+•
+
+Falta:
+<span
+style="color:${done?'var(--green)':'var(--red)'};font-weight:700"
+>
+${money(due)}
+</span>
+
+</div>
+
+<div class="bar">
+
+<i
+style="width:${pct}%"
+></i>
+
+</div>
+
+<div class="payrow">
+
+<input
+id="pay${i}"
+type="number"
+step="0.01"
+placeholder="Novo pagamento"
+>
+
+<button
+class="primary"
+onclick="addPayment(${i})"
+>
+Registrar pagamento
+</button>
+
+</div>
+
+${
+v.payments.length
+
+?
+
+v.payments.map(p=>`
+
+<div class="payment">
+
+<span>
+Pagamento em ${p.date}
+</span>
+
+<b>
++ ${money(p.value)}
+</b>
+
+</div>
+
+`).join('')
+
+:
+
+'<div class="muted" style="margin-top:8px">Nenhum pagamento registrado.</div>'
+
+}
+
+</div>
+
+`;
+
+}).join('');
+
+}
+
+
+function addEvent(){
+
+let d=
+document.getElementById('eventDate').value;
+
+let t=
+document.getElementById('eventTime').value;
+
+let x=
+document.getElementById('eventText')
+.value.trim();
+
+if(!d || !x)return;
+
+events.push({
+d,
+t,
+x
+});
+
+events.sort(
+(a,b)=>
+(a.d+a.t).localeCompare(
+b.d+b.t
+)
+);
+
+document.getElementById('eventText').value='';
+
+save();
+
+renderEvents();
+
+}
+
+
+function delEvent(i){
+
+events.splice(i,1);
+
+save();
+
+renderEvents();
+
+}
+
+
+function renderEvents(){
+
+let e=
+document.getElementById('events');
+
+if(!events.length){
+
+e.innerHTML=
+'<div class="muted">Nenhum compromisso cadastrado.</div>';
+
+return;
+
+}
+
+e.innerHTML=events.map((x,i)=>`
+
+<div class="event">
+
+<strong>
+
+${new Date(
+x.d+'T12:00:00'
+).toLocaleDateString('pt-BR')}
+
+${x.t?'• '+x.t:''}
+
+</strong>
+
+<br>
+
+${esc(x.x)}
+
+<button
+class="delete"
+onclick="delEvent(${i})"
+>
+Excluir
+</button>
+
+</div>
+
+`).join('');
+
+}
+
+
+renderTasks();
+
+renderVendors();
+
+renderEvents();
+
+
+/* ATIVA O MODO APLICATIVO */
+
+if ("serviceWorker" in navigator) {
+
+window.addEventListener("load", () => {
+
+navigator.serviceWorker
+.register("./sw.js")
+
+.then(() => {
+
+console.log(
+"MEU CASAMENTO: aplicativo ativado."
+);
+
+})
+
+.catch(error => {
+
+console.error(
+"Erro ao ativar o aplicativo:",
+error
+);
+
+});
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
