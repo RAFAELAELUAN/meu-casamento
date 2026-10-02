@@ -484,13 +484,48 @@ font-size:10px
 
 }
 </style>
+
+<style>
+.auth-bar{position:absolute;top:16px;right:18px;z-index:5}
+.auth-button{border:1px solid rgba(255,255,255,.65);background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:9px 14px;font:600 11px Montserrat;cursor:pointer;backdrop-filter:blur(6px)}
+.auth-overlay{position:fixed;inset:0;background:rgba(48,65,78,.38);display:none;align-items:center;justify-content:center;z-index:9999;padding:18px}
+.auth-overlay.show{display:flex}
+.auth-box{width:min(430px,100%);background:#fff;border-radius:26px;padding:26px;box-shadow:0 25px 70px rgba(30,45,58,.25);position:relative}
+.auth-box h3{font-family:'Cormorant Garamond',serif;color:#5f89ab;font-size:32px;margin:0 0 6px}
+.auth-box p{font-size:12px;color:#74808a;line-height:1.5;margin:0 0 18px}
+.auth-box input{width:100%;margin:6px 0}
+.auth-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.auth-actions button{flex:1;min-width:130px}
+.auth-close{position:absolute;right:14px;top:12px;border:0;background:transparent;color:#74808a;font-size:22px;cursor:pointer}
+.auth-status{font-size:11px;margin-top:10px;color:#5f89ab;min-height:16px}
+.sync-status{font-size:11px;color:rgba(255,255,255,.9);margin-top:8px}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
 
+<div class="auth-overlay" id="authOverlay">
+<div class="auth-box">
+<button class="auth-close" onclick="closeAuth()">×</button>
+<h3>Meu Casamento</h3>
+<p>Entre com a mesma conta no computador e no celular. Assim, seus dados ficam sincronizados.</p>
+<input id="authEmail" type="email" placeholder="Seu e-mail">
+<input id="authPassword" type="password" placeholder="Senha (mínimo 6 caracteres)">
+<div class="auth-actions">
+<button class="primary" onclick="login()">Entrar</button>
+<button class="primary" onclick="signup()">Criar conta</button>
+</div>
+<div class="auth-status" id="authStatus"></div>
+</div>
+</div>
 <div class="app">
 
 <header class="hero">
+<div class="auth-bar">
+<button class="auth-button" id="authButton" onclick="openAuth()">Entrar / Criar conta</button>
+<div class="sync-status" id="syncStatus">Dados sincronizados na nuvem quando você entrar.</div>
+</div>
 
 <div class="floral">✿ ❀ ✿</div>
 
@@ -829,7 +864,7 @@ Entrada dos pais, padrinhos, crianças e florista conforme o roteiro do casament
 
 <br>
 
-Este espaço pode ser ampliado depois com os detalhes do roteiro, sem necessidade de login ou banco de dados.
+Este espaço pode ser ampliado depois com os detalhes do roteiro. Seus dados de organização ficam sincronizados na sua conta.
 
 </div>
 
@@ -897,41 +932,27 @@ setInterval(tick,1000);
 tick();
 
 
-let tasks =
-JSON.parse(
-localStorage.getItem('mc_tasks') || '[]'
-);
-
-let vendors =
-JSON.parse(
-localStorage.getItem('mc_vendors') || '[]'
-);
-
-let events =
-JSON.parse(
-localStorage.getItem('mc_events') || '[]'
-);
-
-
-const save=()=>{
-
-localStorage.setItem(
-'mc_tasks',
-JSON.stringify(tasks)
-);
-
-localStorage.setItem(
-'mc_vendors',
-JSON.stringify(vendors)
-);
-
-localStorage.setItem(
-'mc_events',
-JSON.stringify(events)
-);
-
-};
-
+const SUPABASE_URL='https://donxoarlasznanyblqlt.supabase.co';
+const SUPABASE_KEY='sb_publishable_qv814fo9mMhTqGuBNbQdhg_Jsw0gX4D';
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let currentUser=null,weddingId=null,syncing=false;
+let tasks=[],vendors=[],events=[];
+const localLoad=k=>JSON.parse(localStorage.getItem(k)||'[]');
+const localCache=()=>{localStorage.setItem('mc_tasks',JSON.stringify(tasks));localStorage.setItem('mc_vendors',JSON.stringify(vendors));localStorage.setItem('mc_events',JSON.stringify(events));};
+function setSyncStatus(m){const e=document.getElementById('syncStatus');if(e)e.textContent=m;}
+function openAuth(){document.getElementById('authOverlay').classList.add('show');document.getElementById('authEmail').focus();}
+function closeAuth(){document.getElementById('authOverlay').classList.remove('show');}
+function authMessage(m){document.getElementById('authStatus').textContent=m||'';}
+async function login(){const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;if(!email||!password){authMessage('Informe e-mail e senha.');return;}authMessage('Entrando...');const{error}=await sb.auth.signInWithPassword({email,password});if(error){authMessage(error.message);return;}closeAuth();}
+async function signup(){const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;if(!email||!password){authMessage('Informe e-mail e senha.');return;}if(password.length<6){authMessage('A senha precisa ter pelo menos 6 caracteres.');return;}authMessage('Criando sua conta...');const{data,error}=await sb.auth.signUp({email,password});if(error){authMessage(error.message);return;}if(data.session)closeAuth();else authMessage('Conta criada. Verifique seu e-mail para confirmar o cadastro e depois entre.');}
+async function logout(){await sb.auth.signOut();}
+async function ensureWedding(){const{data,error}=await sb.from('weddings').select('id').eq('user_id',currentUser.id).maybeSingle();if(error)throw error;if(data){weddingId=data.id;return;}const{data:created,error:ie}=await sb.from('weddings').insert({user_id:currentUser.id,nome_noiva:'Rafaela',nome_noivo:'Luan',data_casamento:'2026-11-21',horario:'14:00:00'}).select('id').single();if(ie)throw ie;weddingId=created.id;}
+async function loadCloud(){await ensureWedding();const[t,e,v]=await Promise.all([sb.from('tasks').select('id,titulo,categoria,concluida').eq('wedding_id',weddingId).order('created_at'),sb.from('schedule_events').select('id,event_date,event_time,titulo').eq('wedding_id',weddingId).order('event_date').order('event_time'),sb.from('expenses').select('id,nome,valor,pagamentos').eq('wedding_id',weddingId).order('created_at')]);if(t.error)throw t.error;if(e.error)throw e.error;if(v.error)throw v.error;const lt=localLoad('mc_tasks'),lv=localLoad('mc_vendors'),le=localLoad('mc_events');if(!t.data.length&&!e.data.length&&!v.data.length&&(lt.length||lv.length||le.length)){tasks=lt;vendors=lv;events=le;await syncAll();}else{tasks=t.data.map(x=>({id:x.id,t:x.titulo,c:x.categoria||'Outros',done:!!x.concluida}));vendors=v.data.map(x=>({id:x.id,n:x.nome,total:Number(x.valor||0),payments:Array.isArray(x.pagamentos)?x.pagamentos:[]}));events=e.data.map(x=>({id:x.id,d:x.event_date,t:x.event_time?String(x.event_time).slice(0,5):'',x:x.titulo}));localCache();}renderTasks();renderVendors();renderEvents();}
+async function syncAll(){if(!currentUser||!weddingId||syncing)return;syncing=true;try{let r=await sb.from('tasks').delete().eq('wedding_id',weddingId);if(r.error)throw r.error;if(tasks.length){r=await sb.from('tasks').insert(tasks.map(x=>({wedding_id:weddingId,titulo:x.t,categoria:x.c||'Outros',concluida:!!x.done})));if(r.error)throw r.error;}r=await sb.from('expenses').delete().eq('wedding_id',weddingId);if(r.error)throw r.error;if(vendors.length){r=await sb.from('expenses').insert(vendors.map(v=>({wedding_id:weddingId,nome:v.n,valor:Number(v.total||0),pago:v.payments.reduce((a,p)=>a+Number(p.value||0),0)>=Number(v.total||0),pagamentos:v.payments||[]})));if(r.error)throw r.error;}r=await sb.from('schedule_events').delete().eq('wedding_id',weddingId);if(r.error)throw r.error;if(events.length){r=await sb.from('schedule_events').insert(events.map(x=>({wedding_id:weddingId,event_date:x.d,event_time:x.t||null,titulo:x.x})));if(r.error)throw r.error;}localCache();setSyncStatus('✓ Sincronizado com o celular e outros aparelhos');}catch(err){console.error(err);setSyncStatus('⚠ Não foi possível sincronizar agora');}finally{syncing=false;}}
+async function save(){localCache();await syncAll();}
+async function initCloud(){const{data}=await sb.auth.getSession();if(data.session){currentUser=data.session.user;document.getElementById('authButton').textContent='Sair';document.getElementById('authButton').onclick=logout;setSyncStatus('Conectando à sua conta...');try{await loadCloud();setSyncStatus('✓ Sincronizado com o celular e outros aparelhos');closeAuth();}catch(err){console.error(err);setSyncStatus('⚠ Erro ao carregar seus dados');}}else{openAuth();setSyncStatus('Entre para sincronizar seus dados entre aparelhos.');}}
+sb.auth.onAuthStateChange((event,session)=>{if(session){currentUser=session.user;document.getElementById('authButton').textContent='Sair';document.getElementById('authButton').onclick=logout;setTimeout(async()=>{try{await loadCloud();closeAuth();}catch(err){console.error(err);}},0);}else{currentUser=null;weddingId=null;document.getElementById('authButton').textContent='Entrar / Criar conta';document.getElementById('authButton').onclick=openAuth;setSyncStatus('Entre para sincronizar seus dados entre aparelhos.');}});
+initCloud();
 
 document.querySelectorAll('.nav button')
 .forEach(b=>{
@@ -982,7 +1003,7 @@ renderTasks();
 }
 
 
-function toggleTask(i){
+async function toggleTask(i){
 
 tasks[i].done=!tasks[i].done;
 
@@ -993,7 +1014,7 @@ renderTasks();
 }
 
 
-function delTask(i){
+async function delTask(i){
 
 tasks.splice(i,1);
 
@@ -1058,7 +1079,7 @@ Excluir
 }
 
 
-function addVendor(){
+async function addVendor(){
 
 let n=
 document.getElementById('vendorName')
@@ -1088,7 +1109,7 @@ renderVendors();
 }
 
 
-function addPayment(i){
+async function addPayment(i){
 
 let inp=
 document.getElementById('pay'+i);
@@ -1111,7 +1132,7 @@ renderVendors();
 }
 
 
-function delVendor(i){
+async function delVendor(i){
 
 vendors.splice(i,1);
 
@@ -1303,7 +1324,7 @@ Pagamento em ${p.date}
 }
 
 
-function addEvent(){
+async function addEvent(){
 
 let d=
 document.getElementById('eventDate').value;
@@ -1339,7 +1360,7 @@ renderEvents();
 }
 
 
-function delEvent(i){
+async function delEvent(i){
 
 events.splice(i,1);
 
