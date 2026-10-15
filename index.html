@@ -334,6 +334,11 @@ border-radius:17px;
 padding:15px;
 margin:10px 0
 }
+.finance-group{margin-top:22px;padding-top:17px;border-top:1px solid #e3ebf0}
+.finance-group h4{font-family:'Cormorant Garamond',serif;color:var(--serenity-dark);font-size:25px;margin:0 0 8px}
+.paid-group{background:linear-gradient(180deg,#f5fbf7 0%,rgba(255,255,255,0) 100%);border:1px solid #e0f0e7;border-radius:18px;padding:16px;margin-top:24px}
+.paid-group h4{color:var(--green)}
+
 
 .expense-head{
 display:flex;
@@ -752,7 +757,16 @@ Adicionar fornecedor
 
 </div>
 
-<div id="vendors" class="list"></div>
+<div class="finance-group">
+<h4>O que ainda falta pagar</h4>
+<div class="subtitle">Fornecedores com saldo pendente, incluindo pagamentos parciais já registrados.</div>
+<div id="vendorsPending" class="list"></div>
+</div>
+<div class="finance-group paid-group">
+<h4>O que já foi pago</h4>
+<div class="subtitle">Fornecedores cujo valor total já foi quitado.</div>
+<div id="vendorsPaid" class="list"></div>
+</div>
 
 </div>
 
@@ -1174,183 +1188,64 @@ vendors.splice(i,1);await save();renderVendors();
 
 
 function renderVendors(){
+  const pendingList=document.getElementById('vendorsPending');
+  const paidList=document.getElementById('vendorsPaid');
+  let tc=0,tp=0;
+  vendors.forEach(v=>{
+    tc+=Number(v.total||0);
+    tp+=(v.payments||[]).reduce((a,p)=>a+Number(p.value||0),0);
+  });
+  document.getElementById('totalContracted').textContent=money(tc);
+  document.getElementById('totalPaid').textContent=money(tp);
+  document.getElementById('totalDue').textContent=money(Math.max(0,tc-tp));
 
-let c=
-document.getElementById('vendors');
+  if(!vendors.length){
+    pendingList.innerHTML='<div class="muted">Nenhum fornecedor cadastrado.</div>';
+    paidList.innerHTML='<div class="muted">Os fornecedores quitados aparecerão aqui.</div>';
+    return;
+  }
 
-let tc=0;
+  const renderVendor=(v,i)=>{
+    const payments=Array.isArray(v.payments)?v.payments:[];
+    const paid=payments.reduce((a,p)=>a+Number(p.value||0),0);
+    const due=Math.max(0,Number(v.total||0)-paid);
+    const pct=Math.min(100,v.total?paid/v.total*100:0);
+    const done=due<=0;
+    return `
+      <div class="expense">
+        <div class="expense-head">
+          <strong>${esc(v.n)}</strong>
+          <span class="tag ${done?'green':'red'}">${done?'PAGO':'FALTA '+money(due)}</span>
+          <button class="delete" onclick="delVendor(${i})">Excluir</button>
+        </div>
+        <div class="muted">
+          Total: ${money(v.total)} • Pago:
+          <span style="color:var(--green);font-weight:700">${money(paid)}</span>
+          • Falta:
+          <span style="color:${done?'var(--green)':'var(--red)'};font-weight:700">${money(due)}</span>
+        </div>
+        <div class="bar"><i style="width:${pct}%"></i></div>
+        ${done?'':`
+          <div class="payrow">
+            <input id="pay${i}" type="number" step="0.01" min="0.01" placeholder="Novo pagamento">
+            <button class="primary" onclick="addPayment(${i})">Registrar pagamento</button>
+          </div>`}
+        ${payments.length?payments.map(p=>`
+          <div class="payment"><span>Pagamento em ${esc(p.date||'data não informada')}</span><b>+ ${money(p.value)}</b></div>
+        `).join(''):'<div class="muted" style="margin-top:8px">Nenhum pagamento registrado.</div>'}
+      </div>`;
+  };
 
-let tp=0;
-
-vendors.forEach(v=>{
-
-tc+=v.total;
-
-tp+=v.payments.reduce(
-(a,p)=>a+p.value,
-0
-);
-
-});
-
-
-document.getElementById(
-'totalContracted'
-).textContent=money(tc);
-
-document.getElementById(
-'totalPaid'
-).textContent=money(tp);
-
-document.getElementById(
-'totalDue'
-).textContent=
-money(Math.max(0,tc-tp));
-
-
-if(!vendors.length){
-
-c.innerHTML=
-'<div class="muted">Nenhum fornecedor cadastrado.</div>';
-
-return;
-
-}
-
-
-c.innerHTML=vendors.map((v,i)=>{
-
-let paid=
-v.payments.reduce(
-(a,p)=>a+p.value,
-0
-);
-
-let due=
-Math.max(0,v.total-paid);
-
-let pct=
-Math.min(
-100,
-v.total
-? paid/v.total*100
-:0
-);
-
-let done=due<=0;
-
-return `
-
-<div class="expense">
-
-<div class="expense-head">
-
-<strong>
-${esc(v.n)}
-</strong>
-
-<span class="tag ${done?'green':'red'}">
-
-${done
-?'PAGO'
-:'FALTA '+money(due)
-}
-
-</span>
-
-<button
-class="delete"
-onclick="delVendor(${i})"
->
-Excluir
-</button>
-
-</div>
-
-<div class="muted">
-
-Total:
-${money(v.total)}
-
-•
-
-Pago:
-<span
-style="color:var(--green);font-weight:700"
->
-${money(paid)}
-</span>
-
-•
-
-Falta:
-<span
-style="color:${done?'var(--green)':'var(--red)'};font-weight:700"
->
-${money(due)}
-</span>
-
-</div>
-
-<div class="bar">
-
-<i
-style="width:${pct}%"
-></i>
-
-</div>
-
-<div class="payrow">
-
-<input
-id="pay${i}"
-type="number"
-step="0.01"
-placeholder="Novo pagamento"
->
-
-<button
-class="primary"
-onclick="addPayment(${i})"
->
-Registrar pagamento
-</button>
-
-</div>
-
-${
-v.payments.length
-
-?
-
-v.payments.map(p=>`
-
-<div class="payment">
-
-<span>
-Pagamento em ${p.date}
-</span>
-
-<b>
-+ ${money(p.value)}
-</b>
-
-</div>
-
-`).join('')
-
-:
-
-'<div class="muted" style="margin-top:8px">Nenhum pagamento registrado.</div>'
-
-}
-
-</div>
-
-`;
-
-}).join('');
-
+  const pending=vendors.map((v,i)=>({v,i})).filter(({v})=>{
+    const paid=(v.payments||[]).reduce((a,p)=>a+Number(p.value||0),0);
+    return Math.max(0,Number(v.total||0)-paid)>0;
+  });
+  const settled=vendors.map((v,i)=>({v,i})).filter(({v})=>{
+    const paid=(v.payments||[]).reduce((a,p)=>a+Number(p.value||0),0);
+    return Math.max(0,Number(v.total||0)-paid)<=0;
+  });
+  pendingList.innerHTML=pending.length?pending.map(({v,i})=>renderVendor(v,i)).join(''):'<div class="muted">Tudo em dia! Não há valores pendentes.</div>';
+  paidList.innerHTML=settled.length?settled.map(({v,i})=>renderVendor(v,i)).join(''):'<div class="muted">Os fornecedores quitados aparecerão aqui.</div>';
 }
 
 
